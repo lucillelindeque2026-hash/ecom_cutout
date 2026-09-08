@@ -10,10 +10,16 @@ import cv2
 import numpy as np
 from PIL import Image, ImageOps
 
-from .backgrounds import composite
-from .config import BackgroundType, CutoutConfig, OutputFormat
-from .engine import build_engine, refine_mask, SegmentationEngine
-from .shadows import build_shadow_layer
+try:
+    from .backgrounds import composite
+    from .config import BackgroundType, CutoutConfig, OutputFormat
+    from .engine import build_engine, refine_mask, SegmentationEngine
+    from .shadows import build_shadow_layer
+except ImportError:
+    from backgrounds import composite
+    from config import BackgroundType, CutoutConfig, OutputFormat
+    from engine import build_engine, refine_mask, SegmentationEngine
+    from shadows import build_shadow_layer
 
 log = logging.getLogger(__name__)
 

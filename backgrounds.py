@@ -7,7 +7,10 @@ from typing import Optional, Tuple
 import cv2
 import numpy as np
 
-from .config import BackgroundType, CutoutConfig
+try:
+    from .config import BackgroundType, CutoutConfig
+except ImportError:
+    from config import BackgroundType, CutoutConfig
 
 log = logging.getLogger(__name__)
 RGB = Tuple[int, int, int]

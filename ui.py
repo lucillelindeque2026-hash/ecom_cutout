@@ -4,9 +4,14 @@ from __future__ import annotations
 import numpy as np
 from PIL import Image
 
-from .config import (BackgroundType, CutoutConfig, OutputFormat, PRESETS,
-                     ShadowMode, config_from_preset)
-from .pipeline import CutoutPipeline
+try:
+    from .config import (BackgroundType, CutoutConfig, OutputFormat, PRESETS,
+                         ShadowMode, config_from_preset)
+    from .pipeline import CutoutPipeline
+except ImportError:
+    from config import (BackgroundType, CutoutConfig, OutputFormat, PRESETS,
+                        ShadowMode, config_from_preset)
+    from pipeline import CutoutPipeline
 
 _pipe_cache: dict[str, CutoutPipeline] = {}
 
