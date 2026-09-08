@@ -148,6 +148,63 @@ ecom-cutout/
 └── requirements.txt # Dependencies
 ```
 
+## Silhouette Generation for AI Scene Integration
+
+This toolkit supports generating **black silhouettes** alongside cutouts, which is essential for AI-powered scene generation workflows:
+
+### Why Silhouettes?
+
+When generating new scenes with AI image generators, using a silhouette instead of the actual product:
+1. **Prevents AI hallucination** - The AI won't try to modify your product's appearance
+2. **Maintains product integrity** - Your exact product is preserved and composited back later
+3. **Better scene understanding** - AI understands the spatial layout without being distracted by product details
+
+### Workflow
+
+```python
+from pathlib import Path
+from pipeline import CutoutPipeline
+from config import CutoutConfig, BackgroundType, OutputFormat, ShadowMode
+
+# Configure for silhouette + cutout generation
+cfg = CutoutConfig(
+    model='isnet-general-use',  # or 'birefnet-general' for GPU
+    background=BackgroundType.TRANSPARENT,
+    fmt=OutputFormat.PNG,
+    auto_crop=True,
+    fill_ratio=0.85,
+    target_size=2000,
+    shadow=ShadowMode.NONE,  # Remove shadows for clean silhouette
+    square_canvas=True,
+    gpu=False  # Set True if CUDA available
+)
+
+pipeline = CutoutPipeline(cfg)
+
+# Generate both cutout and silhouette
+src = Path('product.jpg')
+cutout_dst = Path('output_cutout.png')
+silhouette_dst = Path('output_silhouette.png')
+
+result = pipeline.process_pair(src, cutout_dst, silhouette_dst)
+
+if result.ok:
+    print(f'✓ Cutout: {cutout_dst} ({result.width}x{result.height})')
+    print(f'✓ Silhouette: {silhouette_dst}')
+```
+
+### Output Files
+
+- **Cutout** (`output_cutout.png`): Product with transparent background, original colors preserved
+- **Silhouette** (`output_silhouette.png`): Black shape with alpha channel, ready for AI scene generation
+
+### Next Steps in Your Workflow
+
+1. Upload silhouette to your AI scene generator (Midjourney, Stable Diffusion, etc.)
+2. Generate the scene around the silhouette
+3. Composite the original cutout back onto the generated scene
+4. Add lighting/shadows for seamless integration
+
 ## Requirements
 
 - Python 3.9+
