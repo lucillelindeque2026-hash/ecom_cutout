@@ -1,0 +1,8 @@
+rembg[gpu]>=2.0.59        # swap for rembg[cpu] if no NVIDIA GPU
+onnxruntime-gpu>=1.17     # GPU inference (use onnxruntime for CPU)
+opencv-python>=4.9
+numpy>=1.26
+Pillow>=10.2
+gradio>=4.19              # optional UI
+tqdm>=4.66
+# GPU note: install the matching CUDA/cuDNN for onnxruntime-gpu. First run downloads model weights (170 MB for birefnet-general) into `/.u2net`.
