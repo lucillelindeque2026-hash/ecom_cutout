@@ -1,0 +1,1 @@
+Nothing should be ignored in this case, as the added files are image files (.png) and the modified file is a markdown file (.md), which are all legitimate project files that should be tracked in version control.

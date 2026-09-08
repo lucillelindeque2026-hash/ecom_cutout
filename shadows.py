@@ -15,7 +15,10 @@ from typing import Optional
 import cv2
 import numpy as np
 
-from .config import ShadowMode
+try:
+    from .config import ShadowMode
+except ImportError:
+    from config import ShadowMode
 
 log = logging.getLogger(__name__)
 
